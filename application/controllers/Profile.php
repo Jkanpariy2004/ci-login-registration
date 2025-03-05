@@ -1,5 +1,13 @@
 <?php
 
+/** 
+  *	@property form_validation $form_validation
+  * @property User_model $User_model
+  * @property input $input
+  * @property session $session
+  * @property email_library $email_library
+  */
+
 class Profile extends MY_Controller
 {
 	public function __construct()

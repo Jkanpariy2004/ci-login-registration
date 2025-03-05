@@ -1,6 +1,12 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+/** 
+  *	@property form_validation $form_validation
+  * @property User_model $User_model
+  * @property input $input
+  */
+
 class Dashboard extends MY_Controller
 {
 	public function __construct()

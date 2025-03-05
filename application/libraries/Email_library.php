@@ -1,10 +1,19 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+/** 
+  *	@property form_validation $form_validation
+  * @property User_model $User_model
+  * @property input $input
+  * @property session $session
+  * @property email $email
+  */
+
 class Email_library
 {
 
 	protected $CI;
+	protected $email;
 
 	public function __construct()
 	{
