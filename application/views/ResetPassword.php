@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Login Page</title>
+	<title>Reset Password</title>
 	<link rel="stylesheet" href="<?php echo base_url('assets/css/bootstrap.min.css'); ?>">
 	<style>
 		.login-form {
@@ -25,7 +25,7 @@
 <body>
 	<div class="card w-50 mx-auto mt-5 p-3 login-form">
 		<div class="text-center">
-			<h1>Login Page</h1>
+			<h1>Reset Password</h1>
 		</div>
 		<?php if ($this->session->flashdata('success')): ?>
 			<div class="alert alert-success">
@@ -45,28 +45,22 @@
 			</div>
 		<?php endif; ?>
 
-		<form action="<?php echo base_url('login/submit'); ?>" method="post">
+		<form action="<?php echo base_url('forgotpassword/resetpasswordsubmit'); ?>" method="post">
 			<div class="mb-3">
-				<label for="email" class="form-label">Email address</label>
-				<input type="email" name="email" class="form-control" placeholder="Enter email" autofocus value="<?php echo set_value('email'); ?>">
-				<div class="is-invalid">
-					<?php echo form_error('email'); ?>
-				</div>
-			</div>
-			<div class="mb-3">
-				<div class="d-flex justify-content-between">
-					<label for="password" class="form-label">Password</label>
-					<a href="<?php echo base_url('forgotpassword'); ?>">Forgot Password?</a>
-				</div>
+				<label for="password" class="form-label">Password</label>
 				<input type="password" name="password" class="form-control" placeholder="Password" value="<?php echo set_value('password'); ?>">
 				<div class="is-invalid">
 					<?php echo form_error('password'); ?>
 				</div>
 			</div>
-			<div class="mb-3 text-center">
-				<p>Don't have an account? <a href="<?php echo base_url('registration'); ?>">Register here</a></p>
+			<div class="mb-3">
+				<label for="confirm_password" class="form-label">Confirm Password</label>
+				<input type="text" name="confirm_password" class="form-control" placeholder="Confirm Password" value="<?php echo set_value('confirm_password'); ?>">
+				<div class="is-invalid">
+					<?php echo form_error('confirm_password'); ?>
+				</div>
 			</div>
-			<button type="submit" class="btn btn-primary w-100">Login</button>
+			<button type="submit" class="btn btn-primary w-100">Submit</button>
 		</form>
 
 	</div>

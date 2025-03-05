@@ -34,9 +34,18 @@ class Login extends CI_Controller
 					redirect(base_url('dashboard'));
 				} else {
 					$this->session->set_flashdata('error', 'Session issue occurred');
-					redirect(base_url('login'));
+					redirect(base_url('/'));;
 				}
+			} else {
+				$this->session->set_flashdata('error', 'Invalid email or password');
+				redirect(base_url('/'));;
 			}
 		}
+	}
+
+	public function logout()
+	{
+		$this->session->sess_destroy();
+		redirect('/');
 	}
 }

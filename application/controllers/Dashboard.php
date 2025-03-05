@@ -1,19 +1,19 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Dashboard extends CI_Controller
+class Dashboard extends MY_Controller
 {
 	public function __construct()
 	{
 		parent::__construct();
-		if (!$this->session->userdata('logged_in')) {
-			redirect('login');
-		}
+		$this->load->model('User_model');
 	}
 
 	public function index()
 	{
+		$this->load->view('Layouts/Header');
 		$this->load->view('Dashboard');
+		$this->load->view('Layouts/Footer');
 	}
 
 	public function search_users()
@@ -25,9 +25,4 @@ class Dashboard extends CI_Controller
 
 		echo json_encode(["data" => $users]);
 	}
-
-	public function logout() {
-        $this->session->sess_destroy();
-        redirect('login');
-    }
 }
