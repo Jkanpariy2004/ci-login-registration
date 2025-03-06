@@ -1,12 +1,13 @@
 <?php
 
 /** 
-  *	@property form_validation $form_validation
-  * @property User_model $User_model
-  * @property input $input
-  * @property session $session
-  * @property email_library $email_library
-  */
+ * @property form_validation $form_validation
+ * @property MailTemplete_model $MailTemplete_model
+ * @property User_model $User_model
+ * @property input $input
+ * @property session $session
+ * @property email_library $email_library
+ */
 
 class ForgotPassword extends CI_Controller
 {
@@ -14,6 +15,7 @@ class ForgotPassword extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('User_model');
+		$this->load->model('MailTemplete_model');
 		$this->load->library('Email_library');
 	}
 
@@ -35,20 +37,27 @@ class ForgotPassword extends CI_Controller
 			if ($user) {
 				$otp = rand(100000, 999999);
 				$expire_at = date("Y-m-d H:i:s", strtotime('+10 minutes'));
-				$message = "Your OTP is: $otp";
-				$subject = 'Forgot Password OTP';
-				$mail_name = 'Forgot Password';
 
-				$this->User_model->store_otp($user->email, $otp, $expire_at);
+				$template = $this->MailTemplete_model->get_email_template('forgot_password_otp');
 
-				$email_sent = $this->email_library->send_welcome_email($email, $message, $subject, $mail_name);
+				if ($template) {
+					$subject = $template->subject;
+					$message = str_replace('{Otp}', $otp, $template->content);
 
-				if ($email_sent) {
-					$this->session->set_flashdata('success', 'OTP sent successfully');
-					$this->session->set_userdata('forgotemail', $user->email);
-					redirect(base_url('forgotpassword/otp'));
+					$this->User_model->store_otp($user->email, $otp, $expire_at);
+
+					$email_sent = $this->email_library->send_welcome_email($email, $message, $subject, $template->title);
+
+					if ($email_sent) {
+						$this->session->set_flashdata('success', 'OTP sent successfully');
+						$this->session->set_userdata('forgotemail', $user->email);
+						redirect(base_url('forgotpassword/otp'));
+					} else {
+						$this->session->set_flashdata('error', 'Failed to send the OTP');
+						redirect(base_url('forgotpassword'));
+					}
 				} else {
-					$this->session->set_flashdata('error', 'Failed to send the OTP');
+					$this->session->set_flashdata('error', 'Email template not found');
 					redirect(base_url('forgotpassword'));
 				}
 			} else {
@@ -57,6 +66,7 @@ class ForgotPassword extends CI_Controller
 			}
 		}
 	}
+
 
 	public function otp()
 	{

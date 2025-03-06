@@ -44,6 +44,7 @@
 				<?php echo $this->session->flashdata('error'); ?>
 			</div>
 		<?php endif; ?>
+
 		<form action="<?php echo base_url('registration/submit'); ?>" method="post" enctype="multipart/form-data">
 			<div class="mb-3">
 				<label for="fullname" class="form-label">Full Name</label>

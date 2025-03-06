@@ -1,11 +1,6 @@
 <div class="w-75 card p-3 mt-5 mb-5 m-auto">
 	<h4>Welcome <?php echo $this->session->userdata('user')->fullname; ?></h4>
 
-	<div class="mb-3">
-		<label for="searchInput" class="form-label">Search</label>
-		<input type="text" id="searchInput" class="form-control" placeholder="Enter full name, email, or date of birth">
-	</div>
-
 	<table id="userTable" class="table table-bordered table-striped text-center">
 		<thead>
 			<tr>
@@ -28,11 +23,8 @@
 		var table = $('#userTable').DataTable({
 			"processing": true,
 			"ajax": {
-				"url": "<?php echo base_url('dashboard/search_users'); ?>",
+				"url": "<?php echo base_url('dashboard/get'); ?>",
 				"type": "GET",
-				"data": function(d) {
-					d.search = $('#searchInput').val();
-				}
 			},
 			"columns": [{
 					"data": "id"

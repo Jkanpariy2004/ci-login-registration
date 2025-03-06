@@ -1,11 +1,12 @@
 <?php
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /** 
-  *	@property form_validation $form_validation
-  * @property User_model $User_model
-  * @property input $input
-  */
+ * @property form_validation $form_validation
+ * @property User_model $User_model
+ * @property input $input
+ */
 
 class Dashboard extends MY_Controller
 {
@@ -22,12 +23,9 @@ class Dashboard extends MY_Controller
 		$this->load->view('Layouts/Footer');
 	}
 
-	public function search_users()
+	public function get()
 	{
-		$this->load->model('User_model');
-		$search = $this->input->get('search');
-
-		$users = $this->User_model->search_users($search);
+		$users = $this->User_model->get_all_users();
 
 		echo json_encode(["data" => $users]);
 	}

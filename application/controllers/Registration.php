@@ -2,12 +2,13 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /** 
-  *	@property form_validation $form_validation
-  * @property User_model $User_model
-  * @property input $input
-  * @property session $session
-  * @property email_library $email_library
-  */
+ * @property form_validation $form_validation
+ * @property MailTemplete_model $MailTemplete_model
+ * @property User_model $User_model
+ * @property input $input
+ * @property session $session
+ * @property email_library $email_library
+ */
 
 class Registration extends CI_Controller
 {
@@ -17,6 +18,7 @@ class Registration extends CI_Controller
 		parent::__construct();
 		$this->load->model('User_model');
 		$this->load->library('Email_library');
+		$this->load->model('MailTemplete_model');
 		$this->load->helper('upload_helper');
 	}
 
@@ -63,27 +65,27 @@ class Registration extends CI_Controller
 			$insert = $this->User_model->insert_user($data);
 
 			if ($insert) {
-				$subject = 'Welcome to Our Website';
-				$message = "
-                    <html>
-                    <head>
-                        <title>Welcome to Our Website</title>
-                    </head>
-                    <body>
-                        <h2>Dear {$data['fullname']},</h2>
-                        <p>Thank you for registering with us. We are excited to have you on board!</p>
-                        <p>Best Regards,<br>Your Website Team</p>
-                    </body>
-                    </html>
-                ";
-				$mail_name = 'Welcome Mail';
+				$template = $this->MailTemplete_model->get_email_template('welcome_mail');
 
-				$email_sent = $this->email_library->send_welcome_email($data['email'], $message, $subject, $mail_name);
+				if ($template) {
+					$subject = $template->subject;
+					$message = str_replace(
+						['{Fullname}', '{Email}', '{Password}'],
+						[$data['fullname'], $data['email'], $this->input->post('password')],
+						$template->content
+					);
 
-				if ($email_sent) {
-					$this->session->set_flashdata('success', 'Registration successful. A welcome email has been sent.');
+					$mail_name = $template->title;
+
+					$email_sent = $this->email_library->send_welcome_email($data['email'], $message, $subject, $mail_name);
+
+					if ($email_sent) {
+						$this->session->set_flashdata('success', 'Registration successful. A welcome email has been sent.');
+					} else {
+						$this->session->set_flashdata('warning', 'Registration successful, but failed to send the welcome email.');
+					}
 				} else {
-					$this->session->set_flashdata('warning', 'Registration successful, but failed to send the welcome email.');
+					$this->session->set_flashdata('warning', 'Registration successful, but email template not found.');
 				}
 
 				redirect('/');

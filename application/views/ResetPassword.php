@@ -45,6 +45,7 @@
 			</div>
 		<?php endif; ?>
 
+
 		<form action="<?php echo base_url('forgotpassword/resetpasswordsubmit'); ?>" method="post">
 			<div class="mb-3">
 				<label for="password" class="form-label">Password</label>

@@ -83,7 +83,6 @@ class Profile extends MY_Controller
 		}
 	}
 
-
 	public function delete($id)
 	{
 		if (empty($id)) {

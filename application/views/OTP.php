@@ -45,6 +45,7 @@
 			</div>
 		<?php endif; ?>
 
+
 		<form action="<?php echo base_url('forgotpassword/otpsubmit'); ?>" method="post">
 			<div class="mb-3">
 				<label for="otp" class="form-label">Otp</label>

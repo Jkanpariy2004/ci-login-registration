@@ -49,21 +49,6 @@ class User_model extends CI_Model
 		}
 	}
 
-	public function search_users($search = "")
-	{
-		if (!empty($search)) {
-			$this->db->like('fullname', $search);
-			$this->db->or_like('email', $search);
-			$this->db->or_like('dob', $search);
-		}
-		$query = $this->db->get('registration');
-		if ($query->num_rows() == 1) {
-			return $query->result();
-		} else {
-			return false;
-		}
-	}
-
 	public function store_otp($user_id, $otp, $expire_at)
 	{
 		$data = array(

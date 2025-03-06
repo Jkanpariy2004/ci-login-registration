@@ -55,6 +55,14 @@
 		.is-invalid {
 			color: red;
 		}
+
+		.tox-statusbar__branding {
+			display: none !important;
+		}
+
+		.tox-promotion{
+			display: none !important;
+		}
 	</style>
 </head>
 
@@ -68,6 +76,12 @@
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 				<li class="nav-item">
 					<a class="nav-link active" aria-current="page" href="<?php echo base_url('profile'); ?>">Profile</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="<?php echo base_url('mailtemplete'); ?>">Email Templete</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="<?php echo base_url('email/credential'); ?>">Email Credentials</a>
 				</li>
 			</ul>
 			<ul class="navbar-nav ml-auto">
